@@ -1,4 +1,4 @@
-package com.jonwelzel;
+package com.jonwelzel.cli;
 
 /**
  * Simple main application
