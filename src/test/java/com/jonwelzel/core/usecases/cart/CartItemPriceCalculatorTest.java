@@ -2,8 +2,8 @@ package com.jonwelzel.core.usecases.cart;
 
 
 import com.jonwelzel.core.gateways.BaseItemGateway;
-import com.jonwelzel.core.model.BaseItem;
-import com.jonwelzel.core.model.CartItem;
+import com.jonwelzel.core.models.BaseItem;
+import com.jonwelzel.core.models.CartItem;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;

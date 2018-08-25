@@ -1,6 +1,6 @@
 package com.jonwelzel.core.usecases.cart;
 
-import com.jonwelzel.core.model.CartItem;
+import com.jonwelzel.core.models.CartItem;
 import com.jonwelzel.core.presenters.CartPricePresenter;
 import org.junit.Before;
 import org.junit.Test;

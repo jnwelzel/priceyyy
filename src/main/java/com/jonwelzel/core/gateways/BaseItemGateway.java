@@ -1,6 +1,6 @@
 package com.jonwelzel.core.gateways;
 
-import com.jonwelzel.core.model.BaseItem;
+import com.jonwelzel.core.models.BaseItem;
 
 import java.util.List;
 import java.util.Map;

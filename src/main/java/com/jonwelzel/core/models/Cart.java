@@ -1,4 +1,4 @@
-package com.jonwelzel.core.model;
+package com.jonwelzel.core.models;
 
 import java.util.List;
 
