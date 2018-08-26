@@ -13,6 +13,9 @@ Architecture concerns (gateways, use cases, presenters, etc) by their respective
 # How I did it
 1. Abstracted the domain problem without caring about the underlying implementation using interfaces
 1. Started working on the underlying implementations
+   1. Cart item price calculator
+   1. Whole cart price calculator
+   1. Gateway that fetches the item with the base price
 
 # Resources
 - http://jsonpath.herokuapp.com

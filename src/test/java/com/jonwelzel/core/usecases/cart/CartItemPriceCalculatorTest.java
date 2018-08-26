@@ -30,7 +30,7 @@ public class CartItemPriceCalculatorTest {
 
     @Test
     public void thePriceForTheItemShouldBeCalculated() {
-        given(baseItemGateway.find(defaultCartItem.getProductType(), defaultCartItem.getOptions())).willReturn(defaultBaseItem);
+        given(baseItemGateway.find(defaultCartItem.getProductType(), defaultCartItem.getOptions())).willReturn(java.util.Optional.ofNullable(defaultBaseItem));
         final int expectedPrice = 27000;
 
         final int result = new CartItemPriceCalculator(baseItemGateway).calculatePrice(defaultCartItem);

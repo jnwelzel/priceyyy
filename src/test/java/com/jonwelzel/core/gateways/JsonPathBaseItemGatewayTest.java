@@ -16,15 +16,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JsonPathBaseItemGatewayTest {
     private File json;
-    private JsonPathBaseItemGateway gateway;
 
     @BeforeClass
     public static void init() {
@@ -55,14 +51,14 @@ public class JsonPathBaseItemGatewayTest {
 
     @Test
     public void shouldFindTheCorrectItem() throws IOException {
-        gateway = new JsonPathBaseItemGateway(json);
+        JsonPathBaseItemGateway gateway = new JsonPathBaseItemGateway(json);
         Map<String, String> options = new HashMap<>();
         options.put("size", "small");
         options.put("colour", "white");
         final int expectedBasePrice = 3800;
 
-        BaseItem result = gateway.find("hoodie", options);
+        Optional<BaseItem> result = gateway.find("hoodie", options);
 
-        Assertions.assertThat(result.getBasePrice()).isEqualTo(expectedBasePrice);
+        Assertions.assertThat(result.get().getBasePrice()).isEqualTo(expectedBasePrice);
     }
 }
