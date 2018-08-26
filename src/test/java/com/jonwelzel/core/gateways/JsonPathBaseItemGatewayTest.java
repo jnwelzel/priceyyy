@@ -1,6 +1,7 @@
 package com.jonwelzel.core.gateways;
 
 import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
@@ -48,7 +49,7 @@ public class JsonPathBaseItemGatewayTest {
     @Before
     public void setUp() throws IOException {
         json = new File(getClass().getClassLoader().getResource("json/base-prices.json").getFile());
-        gateway = new JsonPathBaseItemGateway(json);
+        gateway = new JsonPathBaseItemGateway(JsonPath.parse(json));
     }
 
     @Test

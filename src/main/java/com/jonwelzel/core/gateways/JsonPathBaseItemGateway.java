@@ -1,20 +1,17 @@
 package com.jonwelzel.core.gateways;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.jayway.jsonpath.TypeRef;
 import com.jonwelzel.core.models.BaseItem;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class JsonPathBaseItemGateway implements BaseItemGateway {
     private ReadContext ctx;
 
-    public JsonPathBaseItemGateway(File json) throws IOException {
-        this.ctx = JsonPath.parse(json);
+    public JsonPathBaseItemGateway(ReadContext readContext) {
+        this.ctx = readContext;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class JsonPathBaseItemGateway implements BaseItemGateway {
     }
 
     private boolean isOptionFromBasePriceList(String optionKey, Set<String> basePriceListOptions) {
-        return false;
+        return basePriceListOptions.contains(optionKey);
     }
 
     private Set<String> getBasePriceListOptions(String productType) {
