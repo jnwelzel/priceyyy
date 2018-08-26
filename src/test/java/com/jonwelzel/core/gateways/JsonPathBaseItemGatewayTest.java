@@ -21,6 +21,7 @@ import java.util.*;
 @RunWith(MockitoJUnitRunner.class)
 public class JsonPathBaseItemGatewayTest {
     private File json;
+    private JsonPathBaseItemGateway gateway;
 
     @BeforeClass
     public static void init() {
@@ -45,16 +46,29 @@ public class JsonPathBaseItemGatewayTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         json = new File(getClass().getClassLoader().getResource("json/base-prices.json").getFile());
+        gateway = new JsonPathBaseItemGateway(json);
     }
 
     @Test
-    public void shouldFindTheCorrectItem() throws IOException {
-        JsonPathBaseItemGateway gateway = new JsonPathBaseItemGateway(json);
+    public void shouldFindTheCorrectItem() {
         Map<String, String> options = new HashMap<>();
         options.put("size", "small");
         options.put("colour", "white");
+        final int expectedBasePrice = 3800;
+
+        Optional<BaseItem> result = gateway.find("hoodie", options);
+
+        Assertions.assertThat(result.get().getBasePrice()).isEqualTo(expectedBasePrice);
+    }
+
+    @Test
+    public void shouldIgnoreOptionsThatAreNotInTheBasePriceListForThatProduct() {
+        Map<String, String> options = new HashMap<>();
+        options.put("size", "small");
+        options.put("colour", "white");
+        options.put("print-location", "front");
         final int expectedBasePrice = 3800;
 
         Optional<BaseItem> result = gateway.find("hoodie", options);
