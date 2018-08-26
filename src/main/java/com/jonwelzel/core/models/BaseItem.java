@@ -1,19 +1,27 @@
 package com.jonwelzel.core.models;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.List;
 import java.util.Map;
 
 public class BaseItem {
     private String productType;
-    private List<Map.Entry<String, String>> options;
+    private Map<String, List<String>> options;
     private int basePrice;
 
-    public BaseItem(String productType, List<Map.Entry<String, String>> options, int basePrice) {
+    public BaseItem() {
+    }
+
+    public BaseItem(String productType, Map<String, List<String>> options, int basePrice) {
         this.productType = productType;
         this.options = options;
         this.basePrice = basePrice;
     }
 
+    @JsonGetter("product-type")
     public String getProductType() {
         return productType;
     }
@@ -22,14 +30,17 @@ public class BaseItem {
         this.productType = productType;
     }
 
-    public List<Map.Entry<String, String>> getOptions() {
+    @JsonAnyGetter
+    public Map<String, List<String>> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Map.Entry<String, String>> options) {
+    @JsonAnySetter
+    public void setOptions(Map<String, List<String>> options) {
         this.options = options;
     }
 
+    @JsonGetter("base-price")
     public int getBasePrice() {
         return basePrice;
     }

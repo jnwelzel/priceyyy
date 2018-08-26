@@ -1,15 +1,14 @@
 package com.jonwelzel.core.models;
 
-import java.util.List;
 import java.util.Map;
 
 public class CartItem {
     private String productType;
-    private List<Map.Entry<String, String>> options;
+    private Map<String, String> options;
     private int artistMarkup;
     private int quantity;
 
-    public CartItem(String productType, List<Map.Entry<String, String>> options, int artistMarkup, int quantity) {
+    public CartItem(String productType, Map<String, String> options, int artistMarkup, int quantity) {
         this.productType = productType;
         this.options = options;
         this.artistMarkup = artistMarkup;
@@ -24,11 +23,11 @@ public class CartItem {
         this.productType = productType;
     }
 
-    public List<Map.Entry<String, String>> getOptions() {
+    public Map<String, String> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Map.Entry<String, String>> options) {
+    public void setOptions(Map<String, String> options) {
         this.options = options;
     }
 

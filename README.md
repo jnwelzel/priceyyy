@@ -12,3 +12,7 @@ Architecture concerns (gateways, use cases, presenters, etc) by their respective
 
 # How I did it
 1. Abstracted the domain problem without caring about the underlying implementation using interfaces
+1. Started working on the underlying implementations
+
+# Resources
+- http://jsonpath.herokuapp.com
