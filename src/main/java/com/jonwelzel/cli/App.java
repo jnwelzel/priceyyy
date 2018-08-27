@@ -26,8 +26,8 @@ public class App {
 
     public static void main(String[] args) {
         initJsonPath();
-        String cartFilePath = args[0];
-        String basePricesFilePath = args[1];
+        String cartFilePath;
+        String basePricesFilePath;
 
         if (args.length == 0) {
             Scanner terminalInput = new Scanner(System.in);
@@ -37,6 +37,9 @@ public class App {
 
             System.out.print("Now the base prices list file path: ");
             basePricesFilePath = terminalInput.nextLine();
+        } else {
+            cartFilePath = args[0];
+            basePricesFilePath = args[1];
         }
 
         try {
