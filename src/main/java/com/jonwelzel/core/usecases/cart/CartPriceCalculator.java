@@ -20,7 +20,7 @@ public class CartPriceCalculator {
         for (CartItem item : cartItems) {
             try {
                 sum += itemPriceCalculator.calculatePrice(item);
-            } catch (RecordNotFoundException e) {
+            } catch (RecordNotFoundException | ArithmeticException e) {
                 presenter.presentError(e.getMessage());
                 return;
             }
