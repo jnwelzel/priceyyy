@@ -1,7 +1,8 @@
-package com.jonwelzel.core.gateways;
+package com.jonwelzel.core.gateways.baseitem;
 
 import com.jayway.jsonpath.ReadContext;
 import com.jayway.jsonpath.TypeRef;
+import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.BaseItem;
 
 import java.util.*;
@@ -15,7 +16,7 @@ public class JsonPathBaseItemGateway implements BaseItemGateway {
     }
 
     @Override
-    public Optional<BaseItem> find(String productType, Map<String, String> options) {
+    public BaseItem find(String productType, Map<String, String> options) throws RecordNotFoundException {
         Map<String, String> filteredOptions = options.entrySet().stream()
                 .filter(entry -> isOptionFromBasePriceList(entry.getKey(), getBasePriceListOptions(productType)))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -24,7 +25,11 @@ public class JsonPathBaseItemGateway implements BaseItemGateway {
 
         List<BaseItem> result = ctx.read(query, typeRef);
 
-        return result.size() > 0 ? Optional.of(result.get(0)) : Optional.empty();
+        if (result.size() == 0) {
+            throw new RecordNotFoundException("Could not find record.");
+        }
+
+        return result.get(0);
     }
 
     private boolean isOptionFromBasePriceList(String optionKey, Set<String> basePriceListOptions) {

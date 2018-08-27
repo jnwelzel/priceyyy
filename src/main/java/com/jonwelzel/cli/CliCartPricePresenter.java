@@ -10,7 +10,6 @@ public class CliCartPricePresenter implements CartPricePresenter {
 
     @Override
     public void presentError(String error) {
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("ERROR\n" + error);
+        System.out.println(error);
     }
 }

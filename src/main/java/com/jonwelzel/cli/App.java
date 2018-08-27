@@ -26,20 +26,23 @@ public class App {
 
     public static void main(String[] args) {
         initJsonPath();
+        String cartFilePath = args[0];
+        String basePricesFilePath = args[1];
 
-        Scanner terminalInput = new Scanner(System.in);
+        if (args.length == 0) {
+            Scanner terminalInput = new Scanner(System.in);
 
-        System.out.print("Please type the cart file path: ");
-        String cartFilePath = terminalInput.nextLine();
+            System.out.print("Please type the cart file path: ");
+            cartFilePath = terminalInput.nextLine();
 
-        System.out.print("Now the base prices list file path: ");
-        String basePricesFilePath = terminalInput.nextLine();
+            System.out.print("Now the base prices list file path: ");
+            basePricesFilePath = terminalInput.nextLine();
+        }
 
         try {
             new CartPriceCalculatorBuilder(basePricesFilePath).build().calculatePrice(parseCartItems(cartFilePath));
         } catch (IOException e) {
-//            System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

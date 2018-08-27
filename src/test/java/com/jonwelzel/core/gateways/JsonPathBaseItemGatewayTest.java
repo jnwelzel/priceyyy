@@ -7,6 +7,8 @@ import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
+import com.jonwelzel.core.gateways.baseitem.JsonPathBaseItemGateway;
+import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.BaseItem;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -53,27 +55,27 @@ public class JsonPathBaseItemGatewayTest {
     }
 
     @Test
-    public void shouldFindTheCorrectItem() {
+    public void shouldFindTheCorrectItem() throws RecordNotFoundException {
         Map<String, String> options = new HashMap<>();
         options.put("size", "small");
         options.put("colour", "white");
         final int expectedBasePrice = 3800;
 
-        Optional<BaseItem> result = gateway.find("hoodie", options);
+        BaseItem result = gateway.find("hoodie", options);
 
-        Assertions.assertThat(result.get().getBasePrice()).isEqualTo(expectedBasePrice);
+        Assertions.assertThat(result.getBasePrice()).isEqualTo(expectedBasePrice);
     }
 
     @Test
-    public void shouldIgnoreOptionsThatAreNotInTheBasePriceListForThatProduct() {
+    public void shouldIgnoreOptionsThatAreNotInTheBasePriceListForThatProduct() throws RecordNotFoundException {
         Map<String, String> options = new HashMap<>();
         options.put("size", "small");
         options.put("colour", "white");
         options.put("print-location", "front");
         final int expectedBasePrice = 3800;
 
-        Optional<BaseItem> result = gateway.find("hoodie", options);
+        BaseItem result = gateway.find("hoodie", options);
 
-        Assertions.assertThat(result.get().getBasePrice()).isEqualTo(expectedBasePrice);
+        Assertions.assertThat(result.getBasePrice()).isEqualTo(expectedBasePrice);
     }
 }

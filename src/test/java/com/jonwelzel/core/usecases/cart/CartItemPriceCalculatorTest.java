@@ -1,7 +1,8 @@
 package com.jonwelzel.core.usecases.cart;
 
 
-import com.jonwelzel.core.gateways.BaseItemGateway;
+import com.jonwelzel.core.error.data.RecordNotFoundException;
+import com.jonwelzel.core.gateways.baseitem.BaseItemGateway;
 import com.jonwelzel.core.models.BaseItem;
 import com.jonwelzel.core.models.CartItem;
 import org.assertj.core.api.Assertions;
@@ -29,8 +30,8 @@ public class CartItemPriceCalculatorTest {
     }
 
     @Test
-    public void thePriceForTheItemShouldBeCalculated() {
-        given(baseItemGateway.find(defaultCartItem.getProductType(), defaultCartItem.getOptions())).willReturn(java.util.Optional.ofNullable(defaultBaseItem));
+    public void thePriceForTheItemShouldBeCalculated() throws RecordNotFoundException {
+        given(baseItemGateway.find(defaultCartItem.getProductType(), defaultCartItem.getOptions())).willReturn(defaultBaseItem);
         final int expectedPrice = 27000;
 
         final int result = new CartItemPriceCalculator(baseItemGateway).calculatePrice(defaultCartItem);

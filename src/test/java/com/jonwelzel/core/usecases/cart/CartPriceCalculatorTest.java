@@ -1,5 +1,6 @@
 package com.jonwelzel.core.usecases.cart;
 
+import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.CartItem;
 import com.jonwelzel.core.presenters.CartPricePresenter;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class CartPriceCalculatorTest {
     private List<CartItem> cartItems;
 
     @Mock
-    private CartItemPriceCalculator itemPriceCalculator;
+    private CartItemPriceCalculation itemPriceCalculator;
 
     @Mock
     private CartPricePresenter presenter;
@@ -37,12 +38,22 @@ public class CartPriceCalculatorTest {
     }
 
     @Test
-    public void theCartPriceShouldBeCalculated() {
+    public void theCartPriceShouldBeCalculatedAndTheResultPassedToThePresenter() throws RecordNotFoundException {
         given(itemPriceCalculator.calculatePrice(any(CartItem.class))).willReturn(10000);
         final int expectedPrice = 20000;
 
         new CartPriceCalculator(itemPriceCalculator, presenter).calculatePrice(cartItems);
 
         verify(presenter).presentSuccess(expectedPrice);
+    }
+
+    @Test
+    public void whenExceptionIsThrownPresenterShouldPresentError() throws RecordNotFoundException {
+        final String errorMessage = "Ayy lmao";
+        given(itemPriceCalculator.calculatePrice(any(CartItem.class))).willThrow(new RecordNotFoundException(errorMessage));
+
+        new CartPriceCalculator(itemPriceCalculator, presenter).calculatePrice(cartItems);
+
+        verify(presenter).presentError(errorMessage);
     }
 }
