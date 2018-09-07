@@ -33,8 +33,6 @@ public class CartPriceCalculatorTest {
         cartItems = new ArrayList<>();
         cartItems.add(cartItem1);
         cartItems.add(cartItem2);
-
-
     }
 
     @Test
