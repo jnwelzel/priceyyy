@@ -1,7 +1,8 @@
-package com.jonwelzel.cli;
+package com.jonwelzel.cli.builders;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
+import com.jonwelzel.cli.CliCartPricePresenter;
 import com.jonwelzel.core.gateways.baseitem.JsonPathBaseItemGateway;
 import com.jonwelzel.core.usecases.cart.CartItemPriceCalculator;
 import com.jonwelzel.core.usecases.cart.CartPriceCalculator;
