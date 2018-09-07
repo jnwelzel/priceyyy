@@ -38,24 +38,24 @@ jobs:
         - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
-        # run tests!
-        - run:
-            name: Setup Code Climate test-reporter
-            command: |
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-              chmod +x ./cc-test-reporter
-        - run:
-            name: Run unit tests
-            command: |
-              ./cc-test-reporter before-build
-              mvn integration-test
-              JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter \
-                format-coverage target/site/jacoco/jacoco.xml     \
-                --input-type jacoco
-              ./cc-test-reporter upload-coverage
-        - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard.
-            path: target/surefire-reports
-        - store_artifacts: # store the uberjar as an artifact
-            path: target/priceyyy-1.0.0-SNAPSHOT-jar-with-dependencies.jar
-        - store_artifacts: # store test reports
-            path: target/surefire-reports
+    # run tests!
+    - run:
+        name: Setup Code Climate test-reporter
+        command: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+    - run:
+        name: Run unit tests
+        command: |
+          ./cc-test-reporter before-build
+          mvn integration-test
+          JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter \
+            format-coverage target/site/jacoco/jacoco.xml     \
+            --input-type jacoco
+          ./cc-test-reporter upload-coverage
+    - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard.
+        path: target/surefire-reports
+    - store_artifacts: # store the uberjar as an artifact
+        path: target/priceyyy-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+    - store_artifacts: # store test reports
+        path: target/surefire-reports
