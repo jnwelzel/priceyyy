@@ -9,6 +9,7 @@ import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import com.jonwelzel.cli.builders.CartPriceCalculatorBuilder;
+import com.jonwelzel.core.error.data.InvalidProductOptionsException;
 import com.jonwelzel.core.models.CartItem;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class App {
 
         try {
             new CartPriceCalculatorBuilder(basePricesFilePath).build().calculatePrice(parseCartItems(cartFilePath));
-        } catch (IOException e) {
+        } catch (IOException | InvalidProductOptionsException e) {
             System.out.println(e.getMessage());
         }
     }

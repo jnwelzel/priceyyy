@@ -1,5 +1,6 @@
 package com.jonwelzel.core.usecases.cart;
 
+import com.jonwelzel.core.error.data.InvalidProductOptionsException;
 import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.CartItem;
 import com.jonwelzel.core.presenters.CartPricePresenter;
@@ -36,7 +37,7 @@ public class CartPriceCalculatorTest {
     }
 
     @Test
-    public void theCartPriceShouldBeCalculatedAndTheResultPassedToThePresenter() throws RecordNotFoundException {
+    public void theCartPriceShouldBeCalculatedAndTheResultPassedToThePresenter() throws RecordNotFoundException, InvalidProductOptionsException {
         given(itemPriceCalculator.calculatePrice(any(CartItem.class))).willReturn(10000);
         final int expectedPrice = 20000;
 
@@ -46,7 +47,7 @@ public class CartPriceCalculatorTest {
     }
 
     @Test
-    public void whenExceptionIsThrownPresenterShouldPresentError() throws RecordNotFoundException {
+    public void whenExceptionIsThrownPresenterShouldPresentError() throws RecordNotFoundException, InvalidProductOptionsException {
         final String errorMessage = "Ayy lmao";
         given(itemPriceCalculator.calculatePrice(any(CartItem.class))).willThrow(new RecordNotFoundException(errorMessage));
 

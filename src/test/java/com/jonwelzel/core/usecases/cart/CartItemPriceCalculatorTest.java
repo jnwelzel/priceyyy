@@ -1,6 +1,7 @@
 package com.jonwelzel.core.usecases.cart;
 
 
+import com.jonwelzel.core.error.data.InvalidProductOptionsException;
 import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.gateways.baseitem.BaseItemGateway;
 import com.jonwelzel.core.models.BaseItem;
@@ -30,7 +31,7 @@ public class CartItemPriceCalculatorTest {
     }
 
     @Test
-    public void thePriceForTheItemShouldBeCalculated() throws RecordNotFoundException {
+    public void thePriceForTheItemShouldBeCalculated() throws RecordNotFoundException, InvalidProductOptionsException {
         given(baseItemGateway.find(defaultCartItem.getProductType(), defaultCartItem.getOptions())).willReturn(defaultBaseItem);
         final int expectedPrice = 27000;
 
