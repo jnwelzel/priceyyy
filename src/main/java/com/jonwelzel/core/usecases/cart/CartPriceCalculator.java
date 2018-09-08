@@ -1,5 +1,6 @@
 package com.jonwelzel.core.usecases.cart;
 
+import com.jonwelzel.core.error.data.InvalidProductOptionsException;
 import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.CartItem;
 import com.jonwelzel.core.presenters.CartPricePresenter;
@@ -15,7 +16,7 @@ public class CartPriceCalculator {
         this.presenter = presenter;
     }
 
-    public void calculatePrice(List<CartItem> cartItems) {
+    public void calculatePrice(List<CartItem> cartItems) throws InvalidProductOptionsException {
         int sum = 0;
         for (CartItem item : cartItems) {
             try {

@@ -2,10 +2,14 @@ package com.jonwelzel.core.gateways.baseitem;
 
 import com.jayway.jsonpath.ReadContext;
 import com.jayway.jsonpath.TypeRef;
+import com.jonwelzel.core.error.data.InvalidProductOptionsException;
 import com.jonwelzel.core.error.data.RecordNotFoundException;
 import com.jonwelzel.core.models.BaseItem;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class JsonPathBaseItemGateway implements BaseItemGateway {
@@ -16,10 +20,15 @@ public class JsonPathBaseItemGateway implements BaseItemGateway {
     }
 
     @Override
-    public BaseItem find(String productType, Map<String, String> options) throws RecordNotFoundException {
-        Map<String, String> filteredOptions = options.entrySet().stream()
-                .filter(entry -> isOptionFromBasePriceList(entry.getKey(), getBasePriceListOptions(productType)))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public BaseItem find(String productType, Map<String, String> options) throws RecordNotFoundException, InvalidProductOptionsException {
+        Map<String, String> filteredOptions = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : options.entrySet()) {
+            if (isOptionFromBasePriceList(entry.getKey(), getBasePriceListOptions(productType))) {
+                filteredOptions.put(entry.getKey(), entry.getValue());
+            }
+        }
+
         final String query = String.format("$[?(@.product-type == '%s'%s)]", productType, buildQueryStringFromOptions(filteredOptions));
         TypeRef<List<BaseItem>> typeRef = new TypeRef<List<BaseItem>>() {};
 
@@ -36,11 +45,16 @@ public class JsonPathBaseItemGateway implements BaseItemGateway {
         return basePriceListOptions.contains(optionKey);
     }
 
-    private Set<String> getBasePriceListOptions(String productType) {
-        List<String> result = new ArrayList<>();
+    private Set<String> getBasePriceListOptions(String productType) throws InvalidProductOptionsException {
         final String query = String.format("$[?(@.product-type == '%s')]", productType);
         TypeRef<List<BaseItem>> typeRef = new TypeRef<List<BaseItem>>() {};
-        return ctx.read(query, typeRef).get(0).getOptions().keySet();
+        List<BaseItem> baseItems = ctx.read(query, typeRef);
+
+        if (baseItems.isEmpty()) {
+            throw new InvalidProductOptionsException("");
+        }
+
+        return baseItems.get(0).getOptions().keySet();
     }
 
     private String buildQueryStringFromOptions(Map<String, String> options) {
